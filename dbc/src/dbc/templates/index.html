@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoDistance | Global Precision</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        /* Custom Mesh Gradient Background */
+        body {
+            background: radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
+                        radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
+                        radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
+            background-color: #030712;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .input-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .input-glass:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
+        }
+    </style>
+</head>
+<body class="text-slate-200 antialiased">
+
+    <div class="w-full max-w-md px-6">
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold tracking-tight text-white mb-2">GeoDistance</h1>
+            <p class="text-slate-400 font-medium">Project #13: High-Precision Calculation</p>
+        </div>
+
+        <div class="glass-card rounded-3xl p-8 transition-all hover:border-white/20">
+            <form action="/distance" method="post" class="space-y-6">
+                
+                <div class="space-y-4">
+                    <div class="relative">
+                        <label class="text-xs font-semibold uppercase tracking-widest text-slate-500 ml-1 mb-2 block">Origin</label>
+                        <input type="text" name="city1" placeholder="e.g. Tokyo" required
+                            class="input-glass w-full px-5 py-3.5 rounded-2xl text-white placeholder-slate-500">
+                    </div>
+
+                    <div class="relative">
+                        <label class="text-xs font-semibold uppercase tracking-widest text-slate-500 ml-1 mb-2 block">Destination</label>
+                        <input type="text" name="city2" placeholder="e.g. New York" required
+                            class="input-glass w-full px-5 py-3.5 rounded-2xl text-white placeholder-slate-500">
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <label class="text-xs font-semibold uppercase tracking-widest text-slate-500 ml-1 mb-2 block">Unit System</label>
+                    <select name="unit" class="input-glass w-full px-5 py-3.5 rounded-2xl text-white appearance-none cursor-pointer">
+                        <option value="km" class="bg-slate-900">Kilometers (Metric)</option>
+                        <option value="mi" class="bg-slate-900">Miles (Imperial)</option>
+                    </select>
+                    <div class="pointer-events-none absolute right-5 bottom-4 text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+                        </svg>
+                    </div>
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-white text-black font-bold py-4 rounded-2xl transition-all hover:bg-slate-200 active:scale-[0.98] shadow-xl shadow-white/5">
+                    Calculate Distance
+                </button>
+            </form>
+        </div>
+
+        {% if distance %}
+        <div class="mt-8 animate-in fade-in slide-in-from-top-4 duration-700">
+            <div class="glass-card rounded-2xl p-6 text-center border-emerald-500/20 bg-emerald-500/5">
+                <span class="text-emerald-400 text-sm font-semibold tracking-widest uppercase mb-1 block">Total Distance</span>
+                <p class="text-3xl font-mono font-bold text-white">
+                    {{ "%.2f" | format(distance) }} <span class="text-lg font-light text-slate-400 uppercase tracking-tighter">{{ unit }}</span>
+                </p>
+                <div class="mt-3 flex items-center justify-center gap-2 text-slate-500 text-sm">
+                    <span class="font-medium text-slate-300">{{ city1 }}</span>
+                    <span>→</span>
+                    <span class="font-medium text-slate-300">{{ city2 }}</span>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <footer class="mt-12 text-center">
+            <p class="text-slate-600 text-sm tracking-tight">
+                Check other projects on <a href="https://github.com/nishchup489-afk/100-Python-Projects" class="text-slate-400 hover:text-slate-200 transition-colors font-medium">100 python live projects</a>
+                <br>
+                Need Explanation ? check the readme file on github repo 
+            </p>
+        </footer>
+    </div>
+
+</body>
+</html>
